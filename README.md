@@ -1,1 +1,0 @@
-# openfoam-from-scratch1
