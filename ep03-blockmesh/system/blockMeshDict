@@ -1,0 +1,88 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | OpenFOAM From Scratch — Episode 3               |
+|   \\  /    A nd           | Meshing with blockMesh                          |
+|    \\/     M anipulation  | Lid-driven cavity (the case built in the video) |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// Every coordinate below is multiplied by this. We lay the box out in tidy
+// units and scale the whole thing to metres here. 0.1 => a 0.1 m square cavity.
+convertToMeters 0.1;
+
+// The eight corners of one hexahedral block.
+// Numbered 0..7 IN THE ORDER LISTED, starting from zero.
+// Front face (z = 0): 0,1,2,3 go counter-clockwise.
+// Back  face (z = 1): 4,5,6,7 are the same four, shifted in +z.
+vertices
+(
+    (0 0 0)   // 0  bottom-left  front
+    (1 0 0)   // 1  bottom-right front
+    (1 1 0)   // 2  top-right    front
+    (0 1 0)   // 3  top-left     front
+    (0 0 1)   // 4  bottom-left  back  (this case is 1 cell thick in z)
+    (1 0 1)   // 5  bottom-right back
+    (1 1 1)   // 6  top-right    back
+    (0 1 1)   // 7  top-left     back
+);
+
+// One block, built from the 8 vertices above.
+//   hex (...)              -> the corner order defines the block's shape
+//   (20 20 1)             -> cells in x, y, z  (2D problem => 1 cell in z)
+//   simpleGrading (1 1 1) -> uniform cells. Try (8 1 1) to pack cells near
+//                            the left wall (see the README).
+blocks
+(
+    hex (0 1 2 3 4 5 6 7) (20 20 1) simpleGrading (1 1 1)
+);
+
+edges
+(
+);
+
+// Every outer face of the mesh must belong to a named patch.
+// Next episode we attach boundary conditions to these names.
+boundary
+(
+    movingWall
+    {
+        type wall;
+        faces
+        (
+            (3 7 6 2)   // the top edge (the lid that will move)
+        );
+    }
+    fixedWalls
+    {
+        type wall;
+        faces
+        (
+            (0 4 7 3)   // left
+            (2 6 5 1)   // right
+            (1 5 4 0)   // bottom
+        );
+    }
+    frontAndBack
+    {
+        type empty;     // 2D: the two z-faces are "empty" so OpenFOAM
+        faces           // solves in 2D instead of 3D.
+        (
+            (0 3 2 1)   // front (z = 0)
+            (4 5 6 7)   // back  (z = 1)
+        );
+    }
+);
+
+mergePatchPairs
+(
+);
+
+// ************************************************************************* //

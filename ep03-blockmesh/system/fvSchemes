@@ -1,0 +1,48 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| OpenFOAM From Scratch — Episode 3 | Meshing with blockMesh                   |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      fvSchemes;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// Standard icoFoam/cavity schemes. We'll explain every one of these in
+// Episode 5 (fvSchemes & fvSolution). Present here so the case is complete.
+
+ddtSchemes
+{
+    default         Euler;
+}
+
+gradSchemes
+{
+    default         Gauss linear;
+    grad(p)         Gauss linear;
+}
+
+divSchemes
+{
+    default         none;
+    div(phi,U)      Gauss linear;
+}
+
+laplacianSchemes
+{
+    default         Gauss linear orthogonal;
+}
+
+interpolationSchemes
+{
+    default         linear;
+}
+
+snGradSchemes
+{
+    default         orthogonal;
+}
+
+// ************************************************************************* //
