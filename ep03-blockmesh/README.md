@@ -3,8 +3,8 @@
 The complete, runnable case from **OpenFOAM From Scratch, Episode 3**.
 This is the lid-driven cavity we build by hand in the video.
 
-▶ Watch the episode: [ADD VIDEO LINK]
-📺 Full series: [ADD PLAYLIST LINK]
+▶ Watch the episode: (https://youtu.be/YQh-ipNeqP8)
+📺 Full series: (https://www.youtube.com/watch?v=JQZ6zmsFcmM&list=PLaCbL-x3lKB4&pp=0gcJCe4COCosWNinsAgC)
 
 ---
 
