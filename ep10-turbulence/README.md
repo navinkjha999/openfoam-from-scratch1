@@ -5,8 +5,8 @@ It solves steady turbulent flow over the classic *pitzDaily* backward-facing
 step using the **k-omega SST** RANS model — the separation-and-reattachment
 case discussed in the video.
 
-▶ Watch the episode: [ADD VIDEO LINK]
-📺 Full series: [ADD PLAYLIST LINK]
+▶ Watch the episode: (https://youtu.be/StDNrkSBC1U)
+📺 Full series:  (https://www.youtube.com/watch?v=JQZ6zmsFcmM&list=PLaCbL-x3lKB4&pp=sAgC)
 
 ---
 
