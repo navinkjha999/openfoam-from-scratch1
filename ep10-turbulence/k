@@ -1,0 +1,49 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| OpenFOAM From Scratch — Episode 10 | Turbulence Modeling                     |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      k;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// k = turbulent kinetic energy. Units: m^2/s^2  -> [0 2 -2 0 0 0 0].
+// Estimated from inlet speed U and a turbulence intensity I:
+//   k = 1.5 * (I * U)^2.  Here ~0.375 for U~10 m/s, I~5%.
+
+dimensions      [0 2 -2 0 0 0 0];
+
+internalField   uniform 0.375;
+
+boundaryField
+{
+    inlet
+    {
+        type            fixedValue;
+        value           uniform 0.375;
+    }
+    outlet
+    {
+        type            zeroGradient;
+    }
+    upperWall
+    {
+        // wall function for k — pairs with y+ ~ 30-300 (see the y+ lesson)
+        type            kqRWallFunction;
+        value           uniform 0.375;
+    }
+    lowerWall
+    {
+        type            kqRWallFunction;
+        value           uniform 0.375;
+    }
+    frontAndBack
+    {
+        type            empty;
+    }
+}
+
+// ************************************************************************* //

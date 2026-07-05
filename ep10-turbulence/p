@@ -1,0 +1,46 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| OpenFOAM From Scratch — Episode 10 | Turbulence Modeling                     |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      p;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// Kinematic pressure (p/rho). dimensions [0 2 -2 0 0 0 0].
+// Inlet/outlet pairing from Episode 4: fix velocity at inlet & let p float;
+// fix pressure at outlet & let velocity float.
+
+dimensions      [0 2 -2 0 0 0 0];
+
+internalField   uniform 0;
+
+boundaryField
+{
+    inlet
+    {
+        type            zeroGradient;        // p floats where U is fixed
+    }
+    outlet
+    {
+        type            fixedValue;          // p pinned where U is free
+        value           uniform 0;
+    }
+    upperWall
+    {
+        type            zeroGradient;
+    }
+    lowerWall
+    {
+        type            zeroGradient;
+    }
+    frontAndBack
+    {
+        type            empty;
+    }
+}
+
+// ************************************************************************* //

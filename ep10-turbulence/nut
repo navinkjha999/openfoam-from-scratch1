@@ -1,0 +1,52 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| OpenFOAM From Scratch — Episode 10 | Turbulence Modeling                     |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      nut;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// nut = turbulent (eddy) viscosity. This is the "extra viscosity" the model
+// ADDS to represent turbulent mixing — the eddy-viscosity idea from the video.
+// Units: m^2/s -> [0 2 -1 0 0 0 0]. OpenFOAM computes it from k and omega;
+// we just give an initial field and wall functions.
+
+dimensions      [0 2 -1 0 0 0 0];
+
+internalField   uniform 0;
+
+boundaryField
+{
+    inlet
+    {
+        type            calculated;   // derived from k & omega
+        value           uniform 0;
+    }
+    outlet
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+    upperWall
+    {
+        // nutkWallFunction: sets eddy viscosity at the wall to match the
+        // wall-function assumption (y+ ~ 30-300)
+        type            nutkWallFunction;
+        value           uniform 0;
+    }
+    lowerWall
+    {
+        type            nutkWallFunction;
+        value           uniform 0;
+    }
+    frontAndBack
+    {
+        type            empty;
+    }
+}
+
+// ************************************************************************* //
